@@ -1,0 +1,188 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main Container */
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Left Side - Image */
+.left-side {
+  width: 50%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.left-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Right Side - Form */
+.right-side {
+  width: 50%;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+h4 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+p {
+  color: gray;
+  margin-top: 10px;
+}
+
+/* Input Field Container */
+.input-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  padding-right: 40px;
+}
+
+#loadingGif {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+}
+
+#checkMark {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: green;
+  font-size: 18px;
+}
+
+button {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 15px;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+}
+
+button.hidden {
+  display: none;
+}
+
+#userInfo {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.error-text {
+  color: red;
+  margin-top: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Back Button */
+.back {
+  margin-top: 20px;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+  /* Stack the image and form vertically */
+  .container {
+    flex-direction: column;
+  }
+
+  /* Make left side image take full width on small screens */
+  .left-side {
+    width: 98%;
+    position: static; /* Remove fixed positioning */
+    height: 400px; /* Adjust height for mobile */
+  }
+
+  /* Adjust right side form */
+  .right-side {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px;
+    height: auto; /* Ensure it adjusts to content */
+  }
+
+  h4 {
+    font-size: 20px; /* Reduce font size for smaller screens */
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.user-icon {
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 18px;
+  pointer-events: none;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  padding-right: 70px; /* make room for user icon + loading gif */
+}
+
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

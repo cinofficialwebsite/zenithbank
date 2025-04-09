@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <i
+      id="mobile-menu-icon"
+      class="fas fa-bars mobile-menu-icon"
+      onclick="toggleSidebar()"
+    ></i>
+
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="user-info">
+          <i
+            id="menu-icon"
+            class="fas fa-bars toggle-btn"
+            onclick="toggleSidebar()"
+          ></i>
+          <div class="user-details">
+            <p id="midandlastname">Loading......</p>
+            <span class="username" id="username">Loading.....</span>
+          </div>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li onclick="activateMenu(this, 'overview')" class="active">
+          <i class="fas fa-home"></i> <span class="menu-text">Overview</span>
+        </li>
+        <li onclick="activateMenu(this, 'transfer')">
+          <i class="fas fa-exchange-alt"></i>
+          <span class="menu-text">Transfer</span>
+        </li>
+        <li onclick="activateMenu(this, 'airtime')">
+          <i class="fas fa-mobile-alt"></i>
+          <span class="menu-text">Airtime Recharge</span>
+        </li>
+        <li onclick="activateMenu(this, 'bill')">
+          <i class="fas fa-file-invoice"></i>
+          <span class="menu-text">Bill Payment</span>
+        </li>
+        <li onclick="activateMenu(this, 'recurring')">
+          <i class="fas fa-redo"></i>
+          <span class="menu-text">Recurring Payments</span>
+        </li>
+        <li onclick="activateMenu(this, 'cards')">
+          <i class="fas fa-credit-card"></i>
+          <span class="menu-text">Cards & Cheques</span>
+        </li>
+        <li onclick="activateMenu(this, 'travel')">
+          <i class="fas fa-plane"></i>
+          <span class="menu-text">Travels & Leisure</span>
+        </li>
+        <li onclick="activateMenu(this, 'messages')">
+          <i class="fas fa-envelope"></i>
+          <span class="menu-text">Messages</span>
+        </li>
+        <li onclick="activateMenu(this, 'settings')">
+          <i class="fas fa-cog"></i> <span class="menu-text">Settings</span>
+        </li>
+        <li onclick="activateMenu(this, 'zenith')">
+          <i class="fas fa-map-marker-alt"></i>
+          <span class="menu-text">Zenith Near Me</span>
+        </li>
+        <hr />
+        <li onclick="activateMenu(this, 'zenith')" style="color: red">
+          <i class="fa fa-power-off"></i>
+          <span class="menu-text">Sign Out</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <section id="overview" class="section active">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Overview</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">
+          <!-- Slider Container -->
+          <div class="slider-container">
+            <div class="slide active-slide">
+              <span class="slide-text"
+                >Savings Account - <span id="accountNum">Loading...</span></span
+              >
+            </div>
+            <div class="slide">
+              <span class="slide-text">Slide 2: More Details</span>
+            </div>
+            <div class="slide">
+              <span class="slide-text">Slide 3: Final Thoughts</span>
+            </div>
+            <div class="dots-container">
+              <div class="dot active-dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+
+          <hr class="section-divider1" />
+
+          <!-- Full Name and Balance -->
+          <div class="user-info">
+            <p class="full-name" id="full-name">Loading ....</p>
+            <p class="balance">
+              <strong id="balance-amount">$0.00</strong>
+              <i class="fa fa-eye" id="toggle-balance"></i>
+            </p>
+          </div>
+
+          <!-- Ledger Account & History -->
+          <div class="ledger-history">
+            <p class="ledger-account" id="ledger-account">
+              Ledger account: $0.00
+            </p>
+            <p class="history"><i class="fa fa-calendar"></i> History</p>
+          </div>
+
+          <!-- EaZyLinks Section -->
+          <div class="eazy-links">
+            <span class="section-title">eaZyLinks</span>
+            <hr class="section-divider" />
+
+            <div class="icon-row">
+              <div class="icon-item">
+                <i class="fa fa-money-bill-wave"></i>
+                <p>QPayment</p>
+              </div>
+              <div class="icon-item">
+                <i class="fa fa-plane"></i>
+                <p>Travel & Leisure</p>
+              </div>
+              <div class="icon-item">
+                <i class="fa fa-tv"></i>
+                <p>Cable TV</p>
+              </div>
+              <div class="icon-item">
+                <i class="fa fa-credit-card"></i>
+                <p>Cards</p>
+              </div>
+            </div>
+
+            <hr class="section-divider" />
+
+            <div class="icon-row">
+              <div class="icon-item">
+                <i class="fa fa-id-card"></i>
+                <p>My BVN</p>
+              </div>
+              <div class="icon-item">
+                <i class="fa fa-clock"></i>
+                <p>Scheduled Payment</p>
+              </div>
+              <div class="icon-item">
+                <i class="fa fa-cog"></i>
+                <p>Customize EaZyLinks</p>
+              </div>
+              <div class="icon-item">
+                <i class="fa fa-cogs"></i>
+                <p>Settings</p>
+              </div>
+            </div>
+
+            <hr class="section-divider" />
+
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6dULpUYqTLtSuU-cpxXoHeh-SL3rQN0WTZw&s"
+              alt="Banner"
+              class="full-width-banner"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section id="transfer" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Transfer</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">
+          <div class="transfer-container">
+            <div class="transfer-header">
+              <button class="history-btn">Transfer History</button>
+              <button class="saved-btn">Saved Transfers</button>
+            </div>
+
+            <div class="transfer-mode">
+              <label>Select Transfer Mode</label>
+              <div class="transfer-options-wrapper">
+                <div class="transfer-options" id="transfer-options">
+                  <button class="mode-btn active" data-mode="own">
+                    👤 Own Account
+                  </button>
+                  <button class="mode-btn" data-mode="zenith">
+                    🏦 Zenith Bank
+                  </button>
+                  <button class="mode-btn" data-mode="other">
+                    🏛️ Other Banks
+                  </button>
+                  <button class="mode-btn" data-mode="foreign">
+                    🌍 Foreign Transfer
+                  </button>
+                  <button class="mode-btn" data-mode="beneficiary">
+                    ➕ Open Account for Beneficiary
+                  </button>
+                </div>
+                <button id="scrollRight">➡️</button>
+              </div>
+            </div>
+
+            <!-- Form Sections -->
+            <form
+              id="own"
+              class="transfer-form active-form"
+              onsubmit="return validateForm('own')"
+            >
+              <label>Select source account</label>
+              <select name="account-type" id="account-type-dropdown">
+                <option value="savings">Savings Account</option>
+                <option value="current">Current Account</option>
+              </select>
+
+              <label>Amount</label>
+              <input
+                type="text"
+                placeholder="0.00"
+                required
+                id="amount-input"
+              />
+
+              <label>Account Number</label>
+              <div class="input-container">
+                <input
+                  type="text"
+                  id="accountNumber"
+                  placeholder="Account Number"
+                  maxlength="11"
+                  required
+                />
+                <img
+                  id="loadingGif"
+                  src="Loading_icon.gif"
+                  alt="Loading..."
+                  style="display: none; width: 20px"
+                />
+              </div>
+              <label>Transaction Description</label>
+              <input type="text" placeholder="Description" />
+              <button type="submit">Transfer</button>
+            </form>
+
+            <form
+              id="zenith"
+              class="transfer-form hidden"
+              onsubmit="return validateForm('zenith')"
+            >
+              <label>Select source account</label>
+              <select name="account-type" id="account-type-dropdown">
+                <option value="savings">Savings Account</option>
+                <option value="current">Current Account</option>
+              </select>
+
+              <label>Amount</label>
+              <input
+                type="text"
+                placeholder="0.00"
+                required
+                id="amount-input"
+              />
+              <label>Account Number</label>
+              <div class="input-container">
+                <input
+                  type="text"
+                  id="accountNumberZenith"
+                  placeholder="Account Number"
+                  maxlength="11"
+                  required
+                />
+                <img
+                  id="loadingGifZenith"
+                  src="Loading_icon.gif"
+                  alt="Loading..."
+                  style="display: none; width: 20px"
+                />
+              </div>
+              <label>Transaction Description</label>
+              <input type="text" placeholder="Description" />
+              <button type="submit">Transfer</button>
+            </form>
+
+            <form
+              id="other"
+              class="transfer-form hidden"
+              onsubmit="return validateForm('other')"
+            >
+              <label>Select source account</label>
+              <select name="account-type" id="account-type-dropdown">
+                <option value="savings">Savings Account</option>
+                <option value="current">Current Account</option>
+              </select>
+              <label>Amount</label>
+              <input
+                type="text"
+                placeholder="0.00"
+                required
+                id="amount-input"
+              />
+              <label>Beneficiary Account Number</label>
+              <div class="input-container">
+                <input
+                  type="text"
+                  id="otherAccount"
+                  placeholder="Account Number"
+                  maxlength="11"
+                  required
+                />
+                <img
+                  id="loadingGifOther"
+                  src="Loading_icon.gif"
+                  alt="Loading..."
+                  style="display: none; width: 20px"
+                />
+              </div>
+              <label>Select Bank</label>
+              <select name="bank" id="bank-dropdown">
+                <option value="1">First Bank</option>
+                <option value="2">Access Bank</option>
+                <option value="3">Guaranty Trust Bank</option>
+                <option value="4">UBA</option>
+                <option value="5">Stanbic IBTC</option>
+              </select>
+              <label>Transaction Description</label>
+              <input type="text" placeholder="Description" />
+              <button type="submit">Transfer</button>
+            </form>
+
+            <form
+              id="foreign"
+              class="transfer-form hidden"
+              onsubmit="return validateForm('foreign')"
+            >
+              <label>Amount (USD)</label>
+              <input
+                type="text"
+                placeholder="0.00"
+                required
+                id="amount-input"
+              />
+              <label>SWIFT Code</label>
+              <input type="text" placeholder="e.g. DEUTDEFFXXX" required />
+              <label>Bank Name</label>
+              <input type="text" placeholder="Bank Name" required />
+              <label>Account Number</label>
+              <div class="input-container">
+                <input
+                  type="text"
+                  id="accountNumberForeign"
+                  placeholder="Account Number"
+                  maxlength="11"
+                  required
+                />
+                <img
+                  id="loadingGifForeign"
+                  src="Loading_icon.gif"
+                  alt="Loading..."
+                  style="display: none; width: 20px"
+                />
+              </div>
+              <label>Country</label>
+              <input type="text" placeholder="Country" required />
+              <label>Transaction Purpose</label>
+              <input type="text" placeholder="Payment reason" required />
+              <button type="submit">Transfer</button>
+            </form>
+
+            <form
+              id="beneficiary"
+              class="transfer-form hidden"
+              onsubmit="return validateForm('beneficiary')"
+            >
+              <label>Beneficiary Source Account Name</label>
+              <input type="text" placeholder="Source Account" required />
+              <label>Beneficiary Account Number</label>
+              <div class="input-container">
+                <input
+                  type="text"
+                  id="beneficiaryAccountNumber"
+                  placeholder="Account Number"
+                  maxlength="11"
+                  required
+                />
+                <img
+                  id="loadingGifBeneficiary"
+                  src="Loading_icon.gif"
+                  alt="Loading..."
+                  style="display: none; width: 20px"
+                />
+              </div>
+              <label>Beneficiary Name</label>
+              <input type="text" placeholder="Full Name" required />
+              <button type="submit">Save Beneficiary</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="airtime" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Airtime Recharge</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">Airtime Recharge Content</div>
+      </section>
+
+      <section id="bill" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Bill Payment</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">Bill Payment Content</div>
+      </section>
+
+      <section id="recurring" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Recurring Payments</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">Recurring Payments Content</div>
+      </section>
+
+      <section id="cards" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Cards & Cheques</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">Cards & Cheques Content</div>
+      </section>
+
+      <section id="travel" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Travels & Leisure</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">Travels & Leisure Content</div>
+      </section>
+
+      <section id="messages" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Messages</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">Messages Content</div>
+      </section>
+
+      <section id="settings" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Settings</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">Settings Content</div>
+      </section>
+
+      <section id="zenith" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Zenith Near Me</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">Zenith Near Me Content</div>
+      </section>
+    </div>
+
+    <div class="bottom-nav sidebar-menu">
+      <li class="nav-item active" onclick="activateMenu(this, 'overview')">
+        <i class="fa fa-list-ul"></i>
+        <span>Overview</span>
+      </li>
+      <li class="nav-item" onclick="activateMenu(this, 'airtime')">
+        <i class="fa fa-phone"></i>
+        <span>Recharge</span>
+      </li>
+      <li class="nav-item" onclick="activateMenu(this, 'transfer')">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Transfer</span>
+      </li>
+      <li class="nav-item" onclick="activateMenu(this, 'cards')">
+        <i class="fas fa-credit-card"></i>
+        <span style="margin-right: 0.4rem">Bill</span>
+      </li>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="transfer.js"></script>
+  </body>
+</html>

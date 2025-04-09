@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Opening</title>
+    <link rel="stylesheet" href="Account-opening.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="full-container-layout">
+      <div class="full-width-image-section"></div>
+      <div class="content-details-form-section">
+        <img
+          src="https://onlineac.zenithbank.com/img/zbLogo.png"
+          alt="Zenith Bank Logo"
+          class="top-right-logo"
+        />
+        <h3>
+          Zenith Online <br />
+          <span class="highlighted-red-text">Account</span>
+          Opening
+        </h3>
+        <p>
+          Open a Zenith Bank account with N0.00 and start enjoying exceptional
+          banking service. You can access your account via a robust range of
+          digital channels that include our Mobile App, Internet Banking,
+          *966#Easybanking.
+        </p>
+        <h4>Select a Category</h4>
+        <div class="category-selection-container">
+          <label class="individual-category-box">
+            <div class="icon-area-container">
+              <i class="fas fa-wallet"></i>
+            </div>
+            <div class="category-text-content">
+              <strong>Personal Account</strong>
+              <p>Best for individuals managing personal finances.</p>
+            </div>
+            <input type="radio" name="category" onclick="enableProceed()" />
+            <div class="custom-radio-checkmark"></div>
+          </label>
+
+          <label class="individual-category-box">
+            <div class="icon-area-container">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="category-text-content">
+              <strong>Business Account</strong>
+              <p>Ideal for entrepreneurs and corporate banking.</p>
+            </div>
+            <input type="radio" name="category" onclick="enableProceed()" />
+            <div class="custom-radio-checkmark"></div>
+          </label>
+
+          <label class="individual-category-box">
+            <div class="icon-area-container">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="category-text-content">
+              <strong>Student Account</strong>
+              <p>Perfect for students and young professionals.</p>
+            </div>
+            <input type="radio" name="category" onclick="enableProceed()" />
+            <div class="custom-radio-checkmark"></div>
+          </label>
+        </div>
+        <button id="proceedBtn" disabled>Proceed</button>
+        <p class="update-existing-account-text">
+          Already have an account? <a href="#">Click here</a> to update existing
+          account.
+        </p>
+        <p class="footer-copyright-text">&copy; 2025 Zenith Bank PLC</p>
+      </div>
+    </div>
+    <script>
+      function enableProceed() {
+        const proceedBtn = document.getElementById("proceedBtn");
+        const categories = document.querySelectorAll(
+          ".individual-category-box"
+        );
+
+        categories.forEach((category) => {
+          category.addEventListener("click", () => {
+            categories.forEach((c) =>
+              c.classList.remove("selected-category-highlight")
+            );
+            category.classList.add("selected-category-highlight");
+            category.querySelector("input").checked = true;
+            proceedBtn.disabled = false;
+          });
+        });
+      }
+
+      enableProceed();
+
+      proceedBtn.addEventListener("click", () => {
+        window.location.href = "timeless-account.html";
+      });
+    </script>
+  </body>
+</html>

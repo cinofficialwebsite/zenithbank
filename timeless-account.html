@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeless Account Verification</title>
+    <link rel="stylesheet" href="timeless-account.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Left Panel -->
+      <div class="left-panel" data-aos="fade-right">
+        <div class="overlay">
+          <a
+            href="Account-opening.html"
+            class="go-back"
+            style="margin-bottom: 1rem"
+            >← Go Back</a
+          >
+          <h3>Welcome to Timeless Verification</h3>
+          <p>Please complete the verification process to proceed.</p>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="right-panel" data-aos="fade-left">
+        <!-- Verification Form -->
+        <div class="verification-form" id="verificationForm">
+          <h2>Verification</h2>
+          <p>Please enter either your NIN or BVN for verification.</p>
+
+          <label>
+            <input type="checkbox" id="agreeCheckbox" /> I have read and
+            consented to the Privacy Policy and Terms and Conditions
+          </label>
+
+          <div class="input-group">
+            <label for="bvn">BVN Number</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="bvn"
+                maxlength="11"
+                disabled
+                oninput="validateNumberInput(this)"
+              />
+              <span class="loading-icon"></span>
+            </div>
+            <p>Dial *565*0# to check your Bank Verification Number</p>
+          </div>
+
+          <div class="input-group">
+            <label for="dob-bvn">Date of Birth</label>
+            <div class="input-wrapper">
+              <input type="date" id="dob-bvn" disabled />
+              <span class="loading-icon"></span>
+            </div>
+            <p>The date of birth must correspond with the BVN</p>
+          </div>
+
+          <h4>OR</h4>
+
+          <div class="input-group">
+            <label for="nin">NIN Number</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="nin"
+                maxlength="11"
+                disabled
+                oninput="validateNumberInput(this)"
+              />
+              <span class="loading-icon"></span>
+            </div>
+            <p>Dial *346*1# to check your NIN number</p>
+          </div>
+
+          <div class="input-group">
+            <label for="dob-nin">Date of Birth</label>
+            <div class="input-wrapper">
+              <input type="date" id="dob-nin" disabled />
+              <span class="loading-icon"></span>
+            </div>
+            <p>The date of birth must correspond with the NIN</p>
+          </div>
+
+          <button id="proceedBtn" disabled>Proceed</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Notiflix/3.2.6/notiflix-aio-3.2.6.min.js"></script>
+    <script src="timeless.js"></script>
+  </body>
+</html>

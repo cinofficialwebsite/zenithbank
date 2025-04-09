@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeless Signature</title>
+    <link rel="stylesheet" href="timeless-account.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="sign">
+    <div class="container">
+      <!-- Left Panel -->
+      <div class="left-panel" data-aos="fade-right">
+        <div class="overlay">
+          <a href="timeless-account.html" class="go-back">← Go Back</a>
+          <h3>Welcome to Timeless Verification</h3>
+          <p>Please complete the verification process to proceed.</p>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="right-panel" data-aos="fade-left">
+        <div class="progress-container"></div>
+
+        <!-- Signature Canvas -->
+        <div class="signature-form">
+          <h2>Upload Signature</h2>
+          <p>Please draw your digital signature in the box below.</p>
+
+          <div
+            class="signature-box"
+            style="border: 1px solid red; margin-bottom: 2rem"
+          >
+            <canvas id="signatureCanvas"></canvas>
+          </div>
+
+          <button id="clearSignature" style="margin-bottom: 1rem">Clear</button>
+          <button id="proceedToPersonalInfo" disabled>Proceed</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Notiflix/3.2.6/notiflix-aio-3.2.6.min.js"></script>
+    <script src="timeless.js"></script>
+    <script src="signature.js"></script>
+  </body>
+</html>

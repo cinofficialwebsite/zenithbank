@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Left Side Image -->
+      <div class="left-side">
+        <img
+          src="https://onlineac.zenithbank.com/img/Image_5.jpg"
+          alt="Login Image"
+        />
+      </div>
+
+      <!-- Right Side Form -->
+      <div class="right-side">
+        <h5 style="color: red">Login</h5>
+        <h6>HELLO</h6>
+        <p>Kindly provide your account number to continue</p>
+        <form id="loginForm">
+          <label for="accountNumber">Account Number</label>
+          <div class="input-container">
+            <input type="text" id="accountNumber" maxlength="11" required />
+            <i class="fas fa-user user-icon"></i>
+            <img id="loadingGif" src="Loading_icon.gif" class="hidden" />
+            <span id="checkMark" class="hidden">&#10004;</span>
+          </div>
+
+          <small id="errorText" class="error-text hidden"
+            >Could not validate your account number</small
+          >
+          <button type="submit" id="continueBtn" disabled>
+            Continue to Dashboard
+          </button>
+        </form>
+        <p id="userInfo" class="hidden"></p>
+        <div class="back" onclick="goBack()">&#8592; Back</div>
+      </div>
+    </div>
+
+    <script src="login.js"></script>
+  </body>
+</html>

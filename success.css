@@ -1,0 +1,43 @@
+.left-panel,
+.right-panel {
+  padding: 30px;
+  text-align: center;
+}
+
+.left-panel {
+  background: #2c3e50;
+  color: white;
+  flex: 1;
+}
+
+.right-panel {
+  flex: 1;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: #28a745;
+  color: white;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 20px auto;
+}
+
+.account-number {
+  font-weight: bold;
+  color: #333;
+}
+
+.copy-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  color: #007bff;
+}
+
+.copy-icon:hover {
+  color: #0056b3;
+}
