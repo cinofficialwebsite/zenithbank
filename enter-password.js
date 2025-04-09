@@ -50,8 +50,15 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("passwordForm")
     .addEventListener("submit", function (event) {
       event.preventDefault();
+
+      const loadingOverlay = document.getElementById("loadingOverlay");
+      loadingOverlay.style.display = "flex";
+
       generateToken(); // ✅ Set token before redirecting
-      window.location.href = "dashboard.html";
+
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 5000); // Show loading overlay for 3s
     });
 });
 

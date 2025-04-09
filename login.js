@@ -46,9 +46,11 @@ document
   .getElementById("loginForm")
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    window.location.href = "enter-password.html";
-  });
 
-function goBack() {
-  window.history.back();
-}
+    const loadingOverlay = document.getElementById("loadingOverlay");
+    loadingOverlay.style.display = "flex";
+
+    setTimeout(() => {
+      window.location.href = "enter-password.html";
+    }, 3000); // Wait 3 seconds before redirecting
+  });

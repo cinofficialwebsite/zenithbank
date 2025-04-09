@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const form = document.getElementById("personalInfoForm");
-  const successStep = document.getElementById("successStep");
+
+  const loadingOverlay = document.getElementById("loadingOverlay");
 
   form.addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevent default form submission
@@ -57,51 +58,45 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    // Send data to backend
-    try {
-      const response = await fetch(
-        `https://zenithbank-backend.onrender.com/api/users/update/${userId}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(personalInfo),
+    // Show loading overlay
+    loadingOverlay.style.display = "flex";
+
+    // Simulate backend call with a delay (5 seconds)
+    setTimeout(async () => {
+      // Send data to backend
+      try {
+        const response = await fetch(
+          `https://zenithbank-backend.onrender.com/api/users/update/${userId}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(personalInfo),
+          }
+        );
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Redirect to next step
+          setTimeout(() => {
+            window.location.href = "success.html";
+          }, 2000); // Redirect after 5 seconds
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: result.error || "Failed to save personal info. Try again!",
+          });
         }
-      );
-
-      const result = await response.json();
-
-      if (response.ok) {
-        // Update Progress Bar
-        if (successStep) {
-          successStep.classList.add("active");
-        }
-
-        // Show success message
-        Swal.fire({
-          icon: "success",
-          title: "Success!",
-          text: "Personal Information Saved Successfully!",
-          timer: 2000,
-          showConfirmButton: false,
-        });
-
-        // Redirect to next step
-        setTimeout(() => {
-          window.location.href = "success.html";
-        }, 2000);
-      } else {
+      } catch (error) {
         Swal.fire({
           icon: "error",
-          title: "Error",
-          text: result.error || "Failed to save personal info. Try again!",
+          title: "Network Error",
+          text: "Failed to connect to the server. Please check your internet and try again.",
         });
+      } finally {
+        loadingOverlay.style.display = "none"; // Hide loading overlay
       }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Network Error",
-        text: "Failed to connect to the server. Please check your internet and try again.",
-      });
-    }
+    }, 5000); // Wait for 5 seconds before proceeding
   });
 });

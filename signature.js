@@ -3,6 +3,7 @@ AOS.init();
 const signatureCanvas = document.getElementById("signatureCanvas");
 const clearSignature = document.getElementById("clearSignature");
 const proceedToPersonalInfo = document.getElementById("proceedToPersonalInfo");
+const loadingOverlay = document.getElementById("loadingOverlay");
 
 const ctx = signatureCanvas.getContext("2d");
 let isDrawing = false;
@@ -72,5 +73,9 @@ function checkSignature() {
 
 // Proceed to Personal Info
 proceedToPersonalInfo.addEventListener("click", () => {
-  window.location.href = "personal-info.html";
+  loadingOverlay.style.display = "flex";
+
+  setTimeout(() => {
+    window.location.href = "personal-info.html";
+  }, 3000); // Redirect after 5 seconds
 });
