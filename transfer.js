@@ -1,177 +1,270 @@
 document.addEventListener("DOMContentLoaded", () => {
   const forms = document.querySelectorAll(".transfer-form");
-  const loadingGif = document.querySelectorAll("img[id^='loadingGif']");
 
-  // Only select input fields in OWN and ZENITH forms
-  const ownInput = document.querySelector("#own #accountNumber");
-  const zenithInput = document.querySelector("#zenith #accountNumberZenith");
-
-  [ownInput, zenithInput].forEach((input) => {
-    input.addEventListener("input", () => {
-      const value = input.value;
-      const gif = input.parentElement.querySelector("img[id^='loadingGif']");
-
-      // Show loading gif when typing
-      if (value.length < 11) {
-        gif.style.display = "inline-block";
-      } else {
-        gif.style.display = "none";
-      }
-
-      // Only fetch when 11 digits
-      if (value.length === 11) {
-        fetch(`http://localhost:5000/api/users/check-account/${value}`)
-          .then((res) => res.json())
-          .then((data) => {
-            let nameLabel = input.parentElement.querySelector(".name-display");
-
-            if (!nameLabel) {
-              nameLabel = document.createElement("p");
-              nameLabel.className = "name-display";
-              input.parentElement.appendChild(nameLabel);
-            }
-
-            if (data.fullName) {
-              nameLabel.textContent = `Account Name: ${data.fullName}`;
-              nameLabel.style.color = "green";
-            } else {
-              nameLabel.textContent = "Account not found";
-              nameLabel.style.color = "red";
-            }
-          })
-          .catch((err) => {
-            console.error("Error checking account:", err);
-          });
-      }
-
-      // Restrict to only numbers
-      if (!/^\d*$/.test(value)) {
-        input.value = value.replace(/[^\d]/g, "");
-      }
-
-      if (value.length >= 11) {
-        gif.style.display = "none";
-      }
-    });
-  });
-
-  // Form validation
-  function validateForm(formId) {
-    const form = document.getElementById(formId);
-    const inputs = form.querySelectorAll("input[required]");
-    let valid = true;
-
-    inputs.forEach((input) => {
-      if (!input.value) {
-        valid = false;
-        input.style.border = "1px solid red";
-      } else {
-        input.style.border = "1px solid green";
-      }
-    });
-
-    if (!valid) {
-      alert("Please fill in all required fields.");
-      return false;
-    }
-
-    return true;
-  }
-
-  // Format amount inputs
-  function formatAmount(inputElement) {
-    let value = inputElement.value;
-    if (!value) return;
-
-    value = value.replace(/[^0-9.]/g, "");
-    let parts = value.split(".");
-    let wholeNumber = parts[0];
-    let decimal = parts[1] ? "." + parts[1] : "";
-    wholeNumber = wholeNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    inputElement.value = wholeNumber + decimal;
-  }
-
-  const amountInputs = document.querySelectorAll(
-    "input[type='text'][placeholder='Amount']"
-  );
-  amountInputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      formatAmount(input);
-    });
-  });
-
-  const amountInput = document.getElementById("amount-input");
-
-  // Function to format the amount with commas and restrict to numbers
-  amountInput.addEventListener("input", (event) => {
-    let value = event.target.value;
-
-    // Remove any non-numeric characters except the decimal point
-    value = value.replace(/[^0-9.]/g, "");
-
-    // Allow only one decimal point
-    if ((value.match(/\./g) || []).length > 1) {
-      value = value.replace(/\.(?=.*\.)/g, "");
-    }
-
-    // Add commas to the number for thousands separators
-    value = formatAmount(value);
-
-    // Update the input field value
-    event.target.value = value;
-  });
-
-  // Function to format the amount with commas
-  function formatAmount(value) {
-    const parts = value.split(".");
-    const integerPart = parts[0];
-    const decimalPart = parts[1] ? "." + parts[1] : "";
-
-    // Add commas to the integer part
-    const formattedIntegerPart = integerPart.replace(
-      /\B(?=(\d{3})+(?!\d))/g,
-      ","
-    );
-
-    // Return the formatted value
-    return formattedIntegerPart + decimalPart;
-  }
-
-  // Format amount inputs: only numbers and auto-comma
-  function formatAmountInput(input) {
-    input.addEventListener("input", () => {
-      // Remove non-digits and commas
-      let value = input.value.replace(/[^0-9]/g, "");
-      // Format with commas
-      input.value = new Intl.NumberFormat().format(value);
-    });
-  }
-
-  // Apply format to all amount fields
-  document
-    .querySelectorAll(
-      "#own #amount-input, #zenith #amount-input, #other #amount-input, #foreign #amount-input"
-    )
-    .forEach(formatAmountInput);
-
-  // Digits-only input restriction (max 11 digits handled by HTML maxlength)
-  function restrictToDigits(input) {
-    input.addEventListener("input", () => {
-      input.value = input.value.replace(/\D/g, "");
-    });
-  }
-
-  // Apply to all account number fields
-  const accountFields = [
-    "#accountNumber",
-    "#accountNumberZenith",
-    "#otherAccount",
-    "#accountNumberForeign",
-    "#beneficiaryAccountNumber",
+  const inputSelectors = [
+    "#own input[name='accountNumberOwn']",
+    "#zenith input[name='accountNumberZenith']",
+    "#own input[name='amount']",
+    "#zenith input[name='amount']",
+    "#other input[name='otherAccount']",
+    "#foreign input[name='accountNumberForeign']",
+    "#beneficiary input[name='beneficiaryAccountNumber']",
   ];
 
-  accountFields.forEach((selector) => {
+  inputSelectors.forEach((selector) => {
     const input = document.querySelector(selector);
-    if (input) restrictToDigits(input);
+    if (input) {
+      input.addEventListener("input", () => {
+        let rawValue = input.value.replace(/\D/g, "");
+        if (input.name.includes("amount")) {
+          localStorage.setItem(input.name, rawValue);
+          input.value = new Intl.NumberFormat().format(rawValue);
+        } else {
+          input.value = rawValue;
+          localStorage.setItem(input.name, rawValue);
+        }
+      });
+    }
   });
+
+  // Pin inputs
+  const pinInputs = document.querySelectorAll(".pin-input");
+  pinInputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+      input.value = input.value.replace(/\D/g, "");
+      if (input.value && index < pinInputs.length - 1) {
+        pinInputs[index + 1].focus();
+      }
+      const pin = Array.from(pinInputs)
+        .map((i) => i.value)
+        .join("");
+      localStorage.setItem("transactionPin", pin); // Store the full PIN
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !input.value && index > 0) {
+        pinInputs[index - 1].focus();
+      }
+    });
+  });
+
+  const pinOverlay = document.getElementById("pinOverlay");
+  const submitPinBtn = document.getElementById("submitPin");
+  const overlayBox = document.querySelector(".overlay-box");
+
+  // Close overlay when clicking outside the white box
+  pinOverlay.addEventListener("click", (event) => {
+    if (!overlayBox.contains(event.target)) {
+      pinOverlay.style.display = "none";
+      clearPinInputs();
+    }
+  });
+
+  pinInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      const pin = Array.from(pinInputs)
+        .map((input) => input.value)
+        .join("");
+
+      if (pin.length === 6) {
+        // Close the PIN overlay immediately
+        pinOverlay.style.display = "none";
+
+        // Show SweetAlert loading spinner for 5 seconds
+        Swal.fire({
+          title: "Verifying PIN...",
+          text: "Please wait while we verify your PIN and process the transaction.",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
+        setTimeout(() => {
+          const accountNumber = localStorage.getItem("currentAccount");
+
+          if (accountNumber) {
+            fetch(
+              "https://zenithbank-backend.onrender.com/api/users/set-or-verify-pin",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  accountNumber: accountNumber,
+                  transactionPin: pin,
+                }),
+              }
+            )
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.message) {
+                  // Proceed with balance deduction
+                  const formId = pinOverlay.getAttribute("data-form-id");
+                  const form = document.getElementById(formId);
+                  if (!form) return;
+
+                  const formData = new FormData(form);
+                  const formValues = {};
+                  formData.forEach((value, key) => {
+                    const cleanValue = value.replace(/,/g, "");
+                    formValues[key] = cleanValue;
+                    localStorage.setItem(key, cleanValue);
+                  });
+
+                  const amount = parseFloat(formValues.amount || 0);
+                  if (amount > 0) {
+                    fetch(
+                      `https://zenithbank-backend.onrender.com/api/users/update-balance/${accountNumber}`,
+                      {
+                        method: "PATCH",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ amount: amount }), // Use negative value to deduct
+                      }
+                    )
+                      .then((res) => res.json())
+                      .then((data) => {
+                        if (data && data.accountBalance !== undefined) {
+                          Swal.fire({
+                            icon: "success",
+                            title: "Transfer Successful!",
+                            text: "Check transaction status.",
+                          }).then(() => {
+                            window.location.href = "dashboard.html";
+                          });
+                        } else {
+                          Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "There was an error updating your balance.",
+                          });
+                        }
+                      })
+                      .catch((err) => {
+                        Swal.fire({
+                          icon: "error",
+                          title: "Error",
+                          text: "An error occurred while processing your transfer.",
+                        });
+                        console.error(err);
+                      });
+                  }
+                } else if (data.error) {
+                  Swal.fire({
+                    icon: "error",
+                    title: "PIN Verification Failed",
+                    text: data.error,
+                  });
+                }
+              })
+              .catch((err) => {
+                Swal.fire({
+                  icon: "error",
+                  title: "Error",
+                  text: "There was an error verifying the transaction PIN.",
+                });
+                console.error(err);
+              });
+          }
+        }, 5000); // Wait 5 seconds before processing
+      }
+    });
+  });
+
+  // Fetch user balance
+  const accountNumber = localStorage.getItem("currentAccount");
+  if (!accountNumber) return;
+
+  fetch(
+    `https://zenithbank-backend.onrender.com/api/users/account/${accountNumber}`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      if (data && data.accountBalance !== undefined) {
+        const balance = parseFloat(data.accountBalance);
+        localStorage.setItem("balance", balance);
+
+        const formattedBalance = formatWithCommas(balance);
+        const option = document.createElement("option");
+        option.value = data.accountNumber;
+        option.textContent = `Account No: ${data.accountNumber} - Balance $${formattedBalance}`;
+
+        [
+          "account-type-own",
+          "account-type-zenith",
+          "account-type-other",
+          "account-type-foreign",
+        ].forEach((id) => {
+          const dropdown = document.getElementById(id);
+          if (dropdown) {
+            dropdown.innerHTML = "";
+            dropdown.appendChild(option.cloneNode(true));
+          }
+        });
+
+        forms.forEach((form) => {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const accountNumberInput = form.querySelector(
+              "input[name='accountNumberInputed']"
+            );
+            if (accountNumberInput && accountNumberInput.value.length !== 11) {
+              Swal.fire({
+                icon: "error",
+                title: "Invalid Account Number",
+                text: "Please enter a valid 11-digit account number.",
+              });
+              return;
+            }
+
+            const formData = new FormData(form);
+            const values = {};
+            formData.forEach((value, key) => {
+              values[key] = value.replace(/,/g, "").trim();
+            });
+
+            const amount = parseFloat(
+              values.amount || values["amount-input"] || 0
+            );
+
+            if (isNaN(amount) || amount <= 0) {
+              Swal.fire({
+                icon: "warning",
+                title: "Invalid Amount",
+                text: "Amount cannot be zero or less.",
+              });
+              return;
+            }
+
+            if (amount > balance) {
+              Swal.fire({
+                icon: "error",
+                title: "Insufficient Balance",
+                text: "You do not have enough funds to complete this transfer.",
+              });
+              return;
+            }
+
+            pinOverlay.style.display = "flex";
+            pinOverlay.setAttribute("data-form-id", form.id);
+            pinInputs[0].focus();
+          });
+        });
+      }
+    });
 });
+
+function clearPinInputs() {
+  document
+    .querySelectorAll(".pin-input")
+    .forEach((input) => (input.value = ""));
+}
+
+function formatWithCommas(amount) {
+  return Number(amount).toLocaleString();
+}
