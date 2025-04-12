@@ -266,6 +266,7 @@
                   maxlength="11"
                   name="accountNumberInputed"
                   required
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                 />
                 <img
                   id="loadingGif"
@@ -306,6 +307,7 @@
                   placeholder="Account Number"
                   maxlength="11"
                   required
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                 />
                 <img
                   id="loadingGifZenith"
@@ -345,6 +347,7 @@
                   maxlength="11"
                   name="accountNumberInputed"
                   required
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                 />
                 <img
                   id="loadingGifOther"
@@ -396,6 +399,7 @@
                   maxlength="11"
                   name="accountNumberInputed"
                   required
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                 />
                 <img
                   id="loadingGifForeign"
@@ -423,6 +427,7 @@
                   maxlength="11"
                   name="accountNumberInputed"
                   required
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                 />
                 <img
                   id="loadingGifBeneficiary"
@@ -434,6 +439,15 @@
               <label>Beneficiary Name</label>
               <input type="text" placeholder="Full Name" required />
               <button type="submit">Save Beneficiary</button>
+
+              <div id="noBeneficiaryNotice" class="no-beneficiary">
+                <p>No beneficiary saved yet.</p>
+                <button id="addBeneficiaryBtn">+</button>
+              </div>
+
+              <div id="beneficiaryDisplay" class="beneficiary-display">
+                <!-- Filled dynamically -->
+              </div>
             </form>
           </div>
           <!-- PIN Overlay -->

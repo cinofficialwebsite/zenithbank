@@ -247,3 +247,72 @@ textarea {
     }
   }
 }
+
+/* Base styles */
+.beneficiary-display {
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.beneficiary-card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.no-beneficiary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+#addBeneficiaryBtn {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+/* Responsive form */
+#beneficiary {
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: auto;
+}
+
+#beneficiary input,
+#beneficiary button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media screen and (max-width: 500px) {
+  .input-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #addBeneficiaryBtn {
+    width: 50px;
+    height: 50px;
+    font-size: 28px;
+  }
+}

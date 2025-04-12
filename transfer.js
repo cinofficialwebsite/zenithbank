@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "#zenith input[name='accountNumberZenith']",
     "#own input[name='amount']",
     "#zenith input[name='amount']",
-    "#other input[name='otherAccount']",
-    "#foreign input[name='accountNumberForeign']",
+    "#other input[name='amount']",
+    "#foreign input[name='amount']",
     "#beneficiary input[name='beneficiaryAccountNumber']",
   ];
 
@@ -268,3 +268,54 @@ function clearPinInputs() {
 function formatWithCommas(amount) {
   return Number(amount).toLocaleString();
 }
+
+const form = document.getElementById("beneficiary");
+const noBeneficiaryNotice = document.getElementById("noBeneficiaryNotice");
+const beneficiaryDisplay = document.getElementById("beneficiaryDisplay");
+const addBeneficiaryBtn = document.getElementById("addBeneficiaryBtn");
+
+const sourceInput = form.querySelector('input[placeholder="Source Account"]');
+const accountNumberInput = document.getElementById("beneficiaryAccountNumber");
+const nameInput = form.querySelector('input[placeholder="Full Name"]');
+
+// Scroll to form on "+" click
+addBeneficiaryBtn.addEventListener("click", () => {
+  form.scrollIntoView({ behavior: "smooth" });
+});
+
+// Save beneficiary
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const beneficiary = {
+    sourceAccount: sourceInput.value.trim(),
+    accountNumber: accountNumberInput.value.trim(),
+    name: nameInput.value.trim(),
+  };
+
+  localStorage.setItem("beneficiary", JSON.stringify(beneficiary));
+  showBeneficiary();
+  form.reset();
+});
+
+// Display beneficiary or show empty state
+function showBeneficiary() {
+  const saved = localStorage.getItem("beneficiary");
+
+  if (!saved) {
+    beneficiaryDisplay.innerHTML = "";
+    noBeneficiaryNotice.style.display = "flex";
+  } else {
+    const beneficiary = JSON.parse(saved);
+    beneficiaryDisplay.innerHTML = `
+      <div class="beneficiary-card">
+        <p><strong>Name:</strong> ${beneficiary.name}</p>
+        <p><strong>Account Number:</strong> ${beneficiary.accountNumber}</p>
+        <p><strong>Source:</strong> ${beneficiary.sourceAccount}</p>
+      </div>
+    `;
+    noBeneficiaryNotice.style.display = "none";
+  }
+}
+
+showBeneficiary(); // Call on page load
