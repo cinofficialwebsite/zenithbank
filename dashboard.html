@@ -17,6 +17,81 @@
     />
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      #transaction-history {
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin-top: 1rem;
+        background-color: #f9f9f9;
+      }
+
+      .collapsed {
+        display: none !important;
+      }
+
+      .transaction-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .transaction-item {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease;
+      }
+
+      .transaction-item:hover {
+        transform: translateY(-3px);
+      }
+
+      .transaction-top {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+      }
+
+      .transaction-details {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .status {
+        padding: 0.2rem 0.6rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+      }
+
+      .status.pending {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+
+      .status.success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      /* Responsive Design */
+      @media screen and (max-width: 600px) {
+        .transaction-top,
+        .transaction-details {
+          flex-direction: column;
+          font-size: 0.85rem;
+        }
+
+        .transaction-top span {
+          display: block;
+          margin-bottom: 0.3rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <i
@@ -209,8 +284,7 @@
         <div class="content-body">
           <div class="transfer-container">
             <div class="transfer-header">
-              <button class="history-btn">Transfer History</button>
-              <button class="saved-btn">Saved Transfers</button>
+              <button id="transferHistoryBtn">Transfer History</button>
             </div>
 
             <div class="transfer-mode">
@@ -449,6 +523,35 @@
                 <!-- Filled dynamically -->
               </div>
             </form>
+
+            <div id="transaction-history" class="collapsed">
+              <h3>Transaction History</h3>
+              <ul class="transaction-list" id="transaction-list">
+                <!-- Example transaction item -->
+                <li class="transaction-item">
+                  <div class="transaction-top">
+                    <span>Transfer to 1234567890</span>
+                    <span class="status pending">Pending</span>
+                  </div>
+                  <div class="transaction-details">
+                    <div>Amount: $100</div>
+                    <div>Date: April 12, 2025</div>
+                    <div>Txn ID: TXN123456</div>
+                  </div>
+                </li>
+                <li class="transaction-item">
+                  <div class="transaction-top">
+                    <span>Transfer to 1234567890</span>
+                    <span class="status pending">Pending</span>
+                  </div>
+                  <div class="transaction-details">
+                    <div>Amount: $100</div>
+                    <div>Date: April 12, 2025</div>
+                    <div>Txn ID: TXN123456</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
           <!-- PIN Overlay -->
           <div id="pinOverlay" style="display: none" class="overlay">
@@ -629,6 +732,70 @@
         <span style="margin-right: 0.4rem">Bill</span>
       </li>
     </div>
+
+    <script>
+      // Reference to the transfer forms and transaction history elements
+      const transferForms = document.querySelectorAll(".transfer-form");
+      const transactionHistory = document.getElementById("transaction-history");
+      const transferHistoryBtn = document.getElementById("transferHistoryBtn");
+      const transactionList = document.getElementById("transaction-list");
+
+      // Function to generate a unique alphanumeric transaction ID
+      function generateTransactionId() {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let transactionId = "TXN";
+        for (let i = 0; i < 6; i++) {
+          transactionId += chars.charAt(
+            Math.floor(Math.random() * chars.length)
+          );
+        }
+        return transactionId;
+      }
+
+      // Function to update the transaction history UI
+      function updateTransactionHistory() {
+        const transactions =
+          JSON.parse(localStorage.getItem("transactionHistory")) || [];
+        transactionList.innerHTML = ""; // Clear the current list
+        transactions.forEach((transaction) => {
+          const transactionItem = document.createElement("li");
+          transactionItem.classList.add("transaction-item");
+          transactionItem.innerHTML = `
+        <div class="transaction-top">
+          <span>Transfer to ${transaction.recipientAccount}</span>
+          <span class="status ${transaction.status.toLowerCase()}">${
+            transaction.status
+          }</span>
+        </div>
+        <div class="transaction-details">
+          <div>Amount: $${transaction.amount.toFixed(2)}</div>
+          <div>Date: ${transaction.date}</div>
+          <div>Txn ID: ${transaction.transactionId}</div>
+        </div>
+      `;
+          transactionList.appendChild(transactionItem);
+        });
+      }
+
+      // Toggle transaction history visibility
+      transferHistoryBtn.addEventListener("click", function () {
+        if (transactionHistory.classList.contains("collapsed")) {
+          // Hide transfer mode and forms, show transaction history
+          document.querySelector(".transfer-mode").style.display = "none";
+          document.querySelectorAll(".transfer-form").forEach((form) => {
+            form.style.display = "none";
+          });
+          transactionHistory.classList.remove("collapsed");
+          transferHistoryBtn.textContent = "Close Transaction History";
+        } else {
+          // Reload the page to reset the state
+          location.reload();
+        }
+      });
+
+      // Load the transaction history on page load
+      updateTransactionHistory();
+    </script>
 
     <script src="dashboard.js"></script>
     <script src="transfer.js"></script>

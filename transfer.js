@@ -129,12 +129,45 @@ document.addEventListener("DOMContentLoaded", () => {
                       .then((res) => res.json())
                       .then((data) => {
                         if (data && data.accountBalance !== undefined) {
+                          // Build transaction data and save it after success
+                          const recipientAccount =
+                            formValues.accountNumberInputed ||
+                            formValues.beneficiaryAccountNumber ||
+                            "Unknown";
+                          const transactionData = {
+                            recipientAccount: recipientAccount,
+                            amount: parseFloat(formValues.amount),
+                            date: new Date().toLocaleString(),
+                            transactionId: generateTransactionId(),
+                            status: "Pending",
+                          };
+
+                          // Save to localStorage
+                          let transactions =
+                            JSON.parse(
+                              localStorage.getItem("transactionHistory")
+                            ) || [];
+                          transactions.unshift(transactionData);
+                          localStorage.setItem(
+                            "transactionHistory",
+                            JSON.stringify(transactions)
+                          );
+
+                          // Update the UI
+                          updateTransactionHistory();
+
+                          // Show transaction history
+                          document.getElementById("transferHistoryBtn").click();
+
                           Swal.fire({
                             icon: "success",
                             title: "Transfer Successful!",
                             text: "Check transaction status.",
                           }).then(() => {
-                            window.location.href = "dashboard.html";
+                            // Simulate click on the transfer history button instead of redirecting
+                            document
+                              .getElementById("transferHistoryBtn")
+                              .click();
                           });
                         } else {
                           Swal.fire({
