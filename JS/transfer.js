@@ -129,32 +129,50 @@ document.addEventListener("DOMContentLoaded", () => {
                       .then((res) => res.json())
                       .then((data) => {
                         if (data && data.accountBalance !== undefined) {
-                          // Build transaction data and save it after success
                           const recipientAccount =
                             formValues.accountNumberInputed ||
                             formValues.beneficiaryAccountNumber ||
                             "Unknown";
+
                           const transactionData = {
-                            recipientAccount: recipientAccount,
+                            senderAccount:
+                              localStorage.getItem("currentAccount"), // used to find the user
+                            recipientAccount,
                             amount: parseFloat(formValues.amount),
-                            date: new Date().toLocaleString(),
-                            transactionId: generateTransactionId(),
-                            status: "Pending",
+                            transactionId: generateTransactionId(), // Your existing function
+                            status: "pending",
+                            date: new Date().toLocaleString(), // Optional: for display purposes
                           };
 
-                          // Save to localStorage
-                          let transactions =
-                            JSON.parse(
-                              localStorage.getItem("transactionHistory")
-                            ) || [];
-                          transactions.unshift(transactionData);
-                          localStorage.setItem(
-                            "transactionHistory",
-                            JSON.stringify(transactions)
-                          );
-
-                          // Update the UI
-                          updateTransactionHistory();
+                          // Save to backend instead of localStorage
+                          fetch(
+                            "https://zenithbank-backend.onrender.com/api/users/transactions",
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(transactionData),
+                            }
+                          )
+                            .then((res) => res.json())
+                            .then((data) => {
+                              if (data.transaction) {
+                                console.log(
+                                  "Transaction saved:",
+                                  data.transaction
+                                );
+                                updateTransactionHistory(); // Still call this if your UI relies on it
+                              } else {
+                                console.error(
+                                  "Failed to save transaction:",
+                                  data.error
+                                );
+                              }
+                            })
+                            .catch((error) => {
+                              console.error("Error saving transaction:", error);
+                            });
 
                           // Show transaction history
                           document.getElementById("transferHistoryBtn").click();

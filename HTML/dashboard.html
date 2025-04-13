@@ -285,6 +285,7 @@
           <div class="transfer-container">
             <div class="transfer-header">
               <button id="transferHistoryBtn">Transfer History</button>
+              <button id="refreshBtn">Refresh</button>
             </div>
 
             <div class="transfer-mode">
@@ -734,17 +735,17 @@
     </div>
 
     <script>
-      // Reference to the transfer forms and transaction history elements
       const transferForms = document.querySelectorAll(".transfer-form");
       const transactionHistory = document.getElementById("transaction-history");
       const transferHistoryBtn = document.getElementById("transferHistoryBtn");
       const transactionList = document.getElementById("transaction-list");
+      const refreshBtn = document.getElementById("refreshBtn");
 
-      // Function to generate a unique alphanumeric transaction ID
+      // Function to generate a unique alphanumeric transaction ID (optional)
       function generateTransactionId() {
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        let transactionId = "TXN";
-        for (let i = 0; i < 6; i++) {
+        let transactionId = "Tf3xN5";
+        for (let i = 0; i < 20; i++) {
           transactionId += chars.charAt(
             Math.floor(Math.random() * chars.length)
           );
@@ -752,49 +753,75 @@
         return transactionId;
       }
 
-      // Function to update the transaction history UI
-      function updateTransactionHistory() {
-        const transactions =
-          JSON.parse(localStorage.getItem("transactionHistory")) || [];
-        transactionList.innerHTML = ""; // Clear the current list
-        transactions.forEach((transaction) => {
-          const transactionItem = document.createElement("li");
-          transactionItem.classList.add("transaction-item");
-          transactionItem.innerHTML = `
-        <div class="transaction-top">
-          <span>Transfer to ${transaction.recipientAccount}</span>
-          <span class="status ${transaction.status.toLowerCase()}">${
-            transaction.status
-          }</span>
-        </div>
-        <div class="transaction-details">
-          <div>Amount: $${transaction.amount.toFixed(2)}</div>
-          <div>Date: ${transaction.date}</div>
-          <div>Txn ID: ${transaction.transactionId}</div>
-        </div>
-      `;
-          transactionList.appendChild(transactionItem);
-        });
+      // Fetch transaction history from backend
+      async function updateTransactionHistory() {
+        const accountNumber = localStorage.getItem("currentAccount");
+        if (!accountNumber) {
+          console.error("No current account found in localStorage.");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `https://zenithbank-backend.onrender.com/api/users/transactions/${accountNumber}`
+          );
+          const transactions = await response.json();
+
+          transactionList.innerHTML = ""; // Clear current list
+
+          if (!Array.isArray(transactions) || transactions.length === 0) {
+            transactionList.innerHTML = "<li>No transactions found.</li>";
+            return;
+          }
+
+          transactions.forEach((transaction) => {
+            const transactionItem = document.createElement("li");
+            transactionItem.classList.add("transaction-item");
+            transactionItem.innerHTML = `
+              <div class="transaction-top">
+                <span>Transfer to ${transaction.recipientAccount}</span>
+                <span class="status ${transaction.status.toLowerCase()}">
+                  ${transaction.status}
+                </span>
+              </div>
+              <div class="transaction-details">
+                <div>Amount: $${parseFloat(transaction.amount).toFixed(2)}</div>
+                <div>Date: ${
+                  transaction.date
+                    ? new Date(transaction.date).toLocaleString()
+                    : "Unknown"
+                }</div>
+                <div>Txn ID: ${transaction.transactionId}</div>
+                <p>contact customer care</p>
+              </div>
+            `;
+            transactionList.appendChild(transactionItem);
+          });
+        } catch (error) {
+          console.error("Error fetching transaction history:", error);
+          transactionList.innerHTML =
+            "<li>Failed to load transaction history.</li>";
+        }
       }
 
       // Toggle transaction history visibility
       transferHistoryBtn.addEventListener("click", function () {
         if (transactionHistory.classList.contains("collapsed")) {
-          // Hide transfer mode and forms, show transaction history
           document.querySelector(".transfer-mode").style.display = "none";
-          document.querySelectorAll(".transfer-form").forEach((form) => {
-            form.style.display = "none";
-          });
+          transferForms.forEach((form) => (form.style.display = "none"));
           transactionHistory.classList.remove("collapsed");
           transferHistoryBtn.textContent = "Close Transaction History";
+          updateTransactionHistory(); // Refresh from server when shown
         } else {
-          // Reload the page to reset the state
-          location.reload();
         }
       });
 
-      // Load the transaction history on page load
+      // Load transaction history from server on page load
       updateTransactionHistory();
+
+      refreshBtn.addEventListener("click", function () {
+        location.reload(); // Optional: collapse by reload
+      });
     </script>
 
     <script src="/JS/dashboard.js"></script>
