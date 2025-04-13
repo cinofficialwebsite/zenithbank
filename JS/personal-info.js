@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.ok) {
           // Redirect to next step
           setTimeout(() => {
-            window.location.href = "success.html";
+            window.location.href = "/HTML/success.html";
           }, 2000); // Redirect after 5 seconds
         } else {
           Swal.fire({

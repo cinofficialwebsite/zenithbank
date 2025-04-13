@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!storedAccount) {
     alert("No account found. Please log in again.");
-    window.location.href = "login.html";
+    window.location.href = "/HTML/login.html";
     return;
   }
 
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
       generateToken(); // ✅ Set token before redirecting
 
       setTimeout(() => {
-        window.location.href = "dashboard.html";
+        window.location.href = "/HTML/dashboard.html";
       }, 5000); // Show loading overlay for 3s
     });
 });

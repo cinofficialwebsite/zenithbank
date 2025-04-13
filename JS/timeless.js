@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (response.ok) {
         // Wait for 5 seconds before redirecting
         setTimeout(() => {
-          window.location.href = "signature.html"; // Replace with your next step
+          window.location.href = "/HTML/signature.html"; // Replace with your next step
         }, 3000);
       } else {
         alert(result.error || "Failed to update user info.");

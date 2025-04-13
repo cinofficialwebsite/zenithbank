@@ -163,11 +163,18 @@ document.addEventListener("DOMContentLoaded", () => {
                             icon: "success",
                             title: "Transfer Successful!",
                             text: "Check transaction status.",
-                          }).then(() => {
-                            // Simulate click on the transfer history button instead of redirecting
-                            document
-                              .getElementById("transferHistoryBtn")
-                              .click();
+                            showConfirmButton: true,
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              // Just trigger the click without causing page reload
+                              const historyBtn =
+                                document.getElementById("transferHistoryBtn");
+                              if (historyBtn) {
+                                historyBtn.dispatchEvent(
+                                  new Event("click", { bubbles: true })
+                                );
+                              }
+                            }
                           });
                         } else {
                           Swal.fire({

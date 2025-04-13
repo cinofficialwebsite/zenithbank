@@ -76,6 +76,6 @@ proceedToPersonalInfo.addEventListener("click", () => {
   loadingOverlay.style.display = "flex";
 
   setTimeout(() => {
-    window.location.href = "personal-info.html";
+    window.location.href = "/HTML/personal-info.html";
   }, 3000); // Redirect after 5 seconds
 });

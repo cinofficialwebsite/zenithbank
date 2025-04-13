@@ -6,7 +6,7 @@ let actualBalance = null; // Store actual balance
   if (!tokenData || !tokenData.value || Date.now() > tokenData.expiry) {
     alert("Session expired or not logged in.");
     localStorage.removeItem("authToken");
-    window.location.href = "login.html";
+    window.location.href = "/HTML/login.html";
   }
 })();
 

@@ -51,6 +51,6 @@ document
     loadingOverlay.style.display = "flex";
 
     setTimeout(() => {
-      window.location.href = "enter-password.html";
+      window.location.href = "/HTML/enter-password.html";
     }, 3000); // Wait 3 seconds before redirecting
   });

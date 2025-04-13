@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Account Opening</title>
-    <link rel="stylesheet" href="Account-opening.css" />
+    <link rel="stylesheet" href="/CSS/Account-opening.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -73,8 +73,8 @@
         </div>
         <button id="proceedBtn" disabled>Proceed</button>
         <p class="update-existing-account-text">
-          Already have an account? <a href="#">Click here</a> to update existing
-          account.
+          Already have an account? <a href="/HTML/login.html">Click here</a> to
+          update existing account.
         </p>
         <p class="footer-copyright-text">&copy; 2025 Zenith Bank PLC</p>
       </div>
@@ -83,7 +83,11 @@
     <!-- Loading Overlay -->
     <div id="loadingOverlay">
       <div class="loading-wrapper">
-        <img src="LOADINGIMG.png" alt="Loading Icon" class="loading-img" />
+        <img
+          src="/IMGS/LOADINGIMG.png"
+          alt="Loading Icon"
+          class="loading-img"
+        />
         <div class="loader-circle"></div>
       </div>
     </div>
@@ -133,7 +137,7 @@
 
             // Wait 5 seconds before redirecting
             setTimeout(() => {
-              window.location.href = "timeless-account.html";
+              window.location.href = "/HTML/timeless-account.html";
             }, 3000);
           } else {
             alert(result.error || "Something went wrong");
