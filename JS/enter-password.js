@@ -79,7 +79,7 @@ togglePassword.addEventListener("click", () => {
 
 function generateToken() {
   const token = Math.random().toString(36).substr(2) + Date.now().toString(36);
-  const expiry = Date.now() + 60 * 60 * 1000; // 1 hour from now
+  const expiry = Date.now() + 5 * 60 * 60 * 1000; // 5 hours from now
 
   const tokenObject = {
     value: token,

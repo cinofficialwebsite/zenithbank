@@ -1,0 +1,35 @@
+/* Settings Section */
+#settings .content-body {
+  padding: 1.5rem;
+}
+
+.settings-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.settings-list li {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-list li strong {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+@media (min-width: 600px) {
+  .settings-list li {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .settings-list li span {
+    text-align: right;
+  }
+}

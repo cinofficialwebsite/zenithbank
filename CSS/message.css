@@ -1,0 +1,44 @@
+.messages-section {
+  padding: 20px;
+  background-color: #fefefe;
+}
+
+.messages-section .content-body {
+  padding: 30px 10px;
+  text-align: center;
+}
+
+.messages-section .empty-box {
+  max-width: 400px;
+  margin: 0 auto;
+  color: #666;
+}
+
+.messages-section .empty-box img {
+  width: 80px;
+  opacity: 0.6;
+  margin-bottom: 15px;
+}
+
+.messages-section .empty-box p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.messages-section .empty-box span {
+  font-size: 0.95rem;
+  color: #999;
+}
+
+@media (max-width: 600px) {
+  .messages-section .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .messages-section .header-logo {
+    width: 100px;
+  }
+}

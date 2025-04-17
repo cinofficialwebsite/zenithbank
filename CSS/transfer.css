@@ -4,6 +4,7 @@
   font-family: Arial, sans-serif;
   height: auto;
   overflow: hidden;
+  margin-bottom: 2rem;
 }
 
 .transfer-header {
@@ -60,6 +61,7 @@
   font-size: 0.85rem;
   cursor: pointer;
   flex-shrink: 0;
+  height: 4rem;
 }
 
 .mode-btn.active {

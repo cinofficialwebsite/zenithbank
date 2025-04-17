@@ -11,6 +11,11 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/CSS/dashboard.css" />
     <link rel="stylesheet" href="/CSS/transfer.css" />
+    <link rel="stylesheet" href="/CSS/airtimesection.css" />
+    <link rel="stylesheet" href="/CSS/billsection.css" />
+    <link rel="stylesheet" href="/CSS/travel.css" />
+    <link rel="stylesheet" href="/CSS/me ssage.css" />
+    <link rel="stylesheet" href="/CSS/settings.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -136,14 +141,7 @@
           <i class="fas fa-file-invoice"></i>
           <span class="menu-text">Bill Payment</span>
         </li>
-        <li onclick="activateMenu(this, 'recurring')">
-          <i class="fas fa-redo"></i>
-          <span class="menu-text">Recurring Payments</span>
-        </li>
-        <li onclick="activateMenu(this, 'cards')">
-          <i class="fas fa-credit-card"></i>
-          <span class="menu-text">Cards & Cheques</span>
-        </li>
+
         <li onclick="activateMenu(this, 'travel')">
           <i class="fas fa-plane"></i>
           <span class="menu-text">Travels & Leisure</span>
@@ -155,10 +153,7 @@
         <li onclick="activateMenu(this, 'settings')">
           <i class="fas fa-cog"></i> <span class="menu-text">Settings</span>
         </li>
-        <li onclick="activateMenu(this, 'zenith')">
-          <i class="fas fa-map-marker-alt"></i>
-          <span class="menu-text">Zenith Near Me</span>
-        </li>
+
         <hr />
         <li onclick="activateMenu(this, 'zenith')" style="color: red">
           <i class="fa fa-power-off"></i>
@@ -216,7 +211,9 @@
             <p class="ledger-account" id="ledger-account">
               Ledger account: $0.00
             </p>
-            <p class="history"><i class="fa fa-calendar"></i> History</p>
+            <p class="history" onclick="activateMenu(this, 'transactions')">
+              <i class="fa fa-calendar"></i> History
+            </p>
           </div>
 
           <!-- EaZyLinks Section -->
@@ -225,10 +222,6 @@
             <hr class="section-divider" />
 
             <div class="icon-row">
-              <div class="icon-item">
-                <i class="fa fa-money-bill-wave"></i>
-                <p>QPayment</p>
-              </div>
               <div class="icon-item">
                 <i class="fa fa-plane"></i>
                 <p>Travel & Leisure</p>
@@ -246,10 +239,6 @@
             <hr class="section-divider" />
 
             <div class="icon-row">
-              <div class="icon-item">
-                <i class="fa fa-id-card"></i>
-                <p>My BVN</p>
-              </div>
               <div class="icon-item">
                 <i class="fa fa-clock"></i>
                 <p>Scheduled Payment</p>
@@ -288,11 +277,6 @@
         </div>
         <div class="content-body">
           <div class="transfer-container">
-            <div class="transfer-header">
-              <button id="transferHistoryBtn">Transfer History</button>
-              <button id="refreshBtn">Refresh</button>
-            </div>
-
             <div class="transfer-mode">
               <label>Select Transfer Mode</label>
               <div class="transfer-options-wrapper">
@@ -605,12 +589,16 @@
         </div>
         <div class="content-body">
           <div id="transaction-history">
-            <ul id="transaction-list" class="transaction-list"></ul>
+            <ul
+              id="transaction-list"
+              class="transaction-list"
+              style="color: black"
+            ></ul>
           </div>
         </div>
       </section>
 
-      <section id="airtime" class="section">
+      <section id="airtime" class="section airtime-section">
         <div class="content-header">
           <nav class="section-nav">
             <span class="nav-text">Airtime Recharge</span>
@@ -621,10 +609,74 @@
             class="header-logo"
           />
         </div>
-        <div class="content-body">Airtime Recharge Content</div>
+
+        <div class="content-body">
+          <!-- Carrier Selection -->
+          <div class="form-group">
+            <label for="carrier">Select Carrier</label>
+            <select id="carrier">
+              <option>Select a carrier</option>
+              <option>AT&T</option>
+              <option>Verizon</option>
+              <option>T-Mobile</option>
+              <option>Sprint</option>
+              <option>US Cellular</option>
+            </select>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="e.g., 555-123-4567" />
+          </div>
+
+          <!-- Amount Options -->
+          <div class="form-group">
+            <label>Amount</label>
+            <div class="amount-options">
+              <button>$5</button>
+              <button class="selected">$10</button>
+              <button>$20</button>
+              <button>$50</button>
+              <button>$100</button>
+              <button>Custom</button>
+            </div>
+          </div>
+
+          <!-- Recharge For -->
+          <div class="form-group">
+            <label>Recharge For</label>
+            <div class="radio-group">
+              <label><input type="radio" name="recharge-for" /> Self</label>
+              <label><input type="radio" name="recharge-for" /> Others</label>
+            </div>
+          </div>
+
+          <!-- Payment Method -->
+          <div class="form-group">
+            <label for="account">Debit From</label>
+            <select id="account">
+              <option>Current account</option>
+              <option>Savings Account</option>
+            </select>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="form-group">
+            <button class="cta-btn">Proceed to Recharge</button>
+          </div>
+
+          <!-- Recent Top-Ups -->
+          <div class="recent-topups">
+            <h3>Recent Top-Ups</h3>
+            <ul>
+              <li></li>
+            </ul>
+          </div>
+        </div>
       </section>
 
-      <section id="bill" class="section">
+      <section id="bill" class="section bill-section">
         <div class="content-header">
           <nav class="section-nav">
             <span class="nav-text">Bill Payment</span>
@@ -635,27 +687,73 @@
             class="header-logo"
           />
         </div>
-        <div class="content-body">Bill Payment Content</div>
-      </section>
 
-      <section id="recurring" class="section">
-        <div class="content-header">
-          <nav class="section-nav">
-            <span class="nav-text">Recurring Payments</span>
-          </nav>
-          <img
-            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
-            alt="Logo"
-            class="header-logo"
-          />
+        <div class="content-body">
+          <!-- Bill Type -->
+          <div class="form-group">
+            <label for="bill-type">Select Bill Type</label>
+            <select id="bill-type">
+              <option>Choose a bill type</option>
+              <option>Electricity</option>
+              <option>Water</option>
+              <option>Internet</option>
+              <option>Streaming (Netflix, Hulu)</option>
+              <option>Property Tax</option>
+            </select>
+          </div>
+
+          <!-- Biller Name -->
+          <div class="form-group">
+            <label for="biller-name">Biller Name</label>
+            <input
+              type="text"
+              id="biller-name"
+              placeholder="e.g., Con Edison, Comcast"
+            />
+          </div>
+
+          <!-- Account / Reference Number -->
+          <div class="form-group">
+            <label for="account-number">Account / Reference Number</label>
+            <input
+              type="text"
+              id="account-number"
+              placeholder="e.g., 1234567890"
+            />
+          </div>
+
+          <!-- Payment Amount -->
+          <div class="form-group">
+            <label for="bill-amount">Amount</label>
+            <input type="text" id="bill-amount" placeholder="$0.00" />
+          </div>
+
+          <!-- Payment Method -->
+          <div class="form-group">
+            <label for="pay-from">Debit From</label>
+            <select id="pay-from">
+              <option>Checking Account</option>
+              <option>Savings Account</option>
+            </select>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="form-group">
+            <button class="cta-btn">Proceed to Pay</button>
+          </div>
+
+          <!-- Recent Bill Payments -->
+          <div class="recent-topups">
+            <h3>Recent Bill Payments</h3>
+            <ul></ul>
+          </div>
         </div>
-        <div class="content-body">Recurring Payments Content</div>
       </section>
 
       <section id="cards" class="section">
         <div class="content-header">
           <nav class="section-nav">
-            <span class="nav-text">Cards & Cheques</span>
+            <span class="nav-text">Cards</span>
           </nav>
           <img
             src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
@@ -663,10 +761,44 @@
             class="header-logo"
           />
         </div>
-        <div class="content-body">Cards & Cheques Content</div>
+        <div class="content-body">
+          <p>Manage your debit and credit cards here. (Coming soon...)</p>
+        </div>
       </section>
 
-      <section id="travel" class="section">
+      <section id="scheduled-payment" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Scheduled Payment</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">
+          <p>Set and manage your scheduled payments. (Coming soon...)</p>
+        </div>
+      </section>
+
+      <section id="customize-links" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Customize EaZyLinks</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">
+          <p>Rearrange or personalize your eaZyLinks here. (Coming soon...)</p>
+        </div>
+      </section>
+
+      <section id="travel" class="section travel-section">
         <div class="content-header">
           <nav class="section-nav">
             <span class="nav-text">Travels & Leisure</span>
@@ -677,7 +809,61 @@
             class="header-logo"
           />
         </div>
-        <div class="content-body">Travels & Leisure Content</div>
+
+        <div class="content-body">
+          <div class="form-group">
+            <label for="destination">Destination</label>
+            <select id="destination">
+              <option>Select a destination</option>
+              <option>New York</option>
+              <option>Los Angeles</option>
+              <option>Miami</option>
+              <option>Las Vegas</option>
+              <option>Chicago</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="travel-date">Travel Date</label>
+            <input type="date" id="travel-date" />
+          </div>
+
+          <div class="form-group">
+            <label>Class</label>
+            <div class="radio-group">
+              <label
+                ><input type="radio" name="travel-class" value="Economy" />
+                Economy</label
+              >
+              <label
+                ><input type="radio" name="travel-class" value="Business" />
+                Business</label
+              >
+              <label
+                ><input type="radio" name="travel-class" value="First Class" />
+                First Class</label
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="travel-pay-from">Pay From</label>
+            <select id="travel-pay-from">
+              <option>Select account</option>
+              <option>Savings Account</option>
+              <option>Current Account</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button class="cta-btn">Proceed to Book</button>
+          </div>
+
+          <div class="recent-topups">
+            <h3>Recent Bookings</h3>
+            <ul></ul>
+          </div>
+        </div>
       </section>
 
       <section id="messages" class="section">
@@ -691,7 +877,17 @@
             class="header-logo"
           />
         </div>
-        <div class="content-body">Messages Content</div>
+        <div class="content-body no-messages">
+          <div class="empty-box">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/5948/5948520.png"
+              alt="No messages"
+              width="50px"
+            />
+            <p>No messages from us yet.</p>
+            <span>Check back later for updates or announcements.</span>
+          </div>
+        </div>
       </section>
 
       <section id="settings" class="section">
@@ -705,21 +901,30 @@
             class="header-logo"
           />
         </div>
-        <div class="content-body">Settings Content</div>
-      </section>
-
-      <section id="zenith" class="section">
-        <div class="content-header">
-          <nav class="section-nav">
-            <span class="nav-text">Zenith Near Me</span>
-          </nav>
-          <img
-            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
-            alt="Logo"
-            class="header-logo"
-          />
+        <div class="content-body" id="settings-content">
+          <h3>User Information</h3>
+          <ul class="settings-list">
+            <li>
+              <strong>Full Name:</strong>
+              <span id="setting-full-name">Loading...</span>
+            </li>
+            <li>
+              <strong>Username:</strong>
+              <span id="setting-username">Loading...</span>
+            </li>
+            <li>
+              <strong>Account Number:</strong>
+              <span id="setting-account">Loading...</span>
+            </li>
+            <li>
+              <strong>Phone:</strong> <span id="setting-phone">Loading...</span>
+            </li>
+            <li>
+              <strong>Account Balance:</strong>
+              <span id="setting-balance">Loading...</span>
+            </li>
+          </ul>
         </div>
-        <div class="content-body">Zenith Near Me Content</div>
       </section>
     </div>
 
@@ -806,13 +1011,15 @@
               </div>
               <div class="transaction-details">
                 <div>Amount: $${parseFloat(transaction.amount).toFixed(2)}</div>
+
+
                 <div>Date: ${
                   transaction.date
                     ? new Date(transaction.date).toLocaleString()
                     : "Unknown"
                 }</div>
                 <div>Txn ID: ${transaction.transactionId}</div>
-                <p>Contact customer care</p>
+                <p>Contact customer care</p>   
               </div>
             `;
 
@@ -838,5 +1045,10 @@
 
     <script src="/JS/dashboard.js"></script>
     <script src="/JS/transfer.js"></script>
+    <script src="/JS/bill.js"></script>
+    <script src="/JS/airtime.js"></script>
+    <script src="/JS/travel.js"></script>
+    <script src="/JS/settings.js"></script>
+    <script src="/JS/easylikns.js"></script>
   </body>
 </html>
