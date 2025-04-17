@@ -123,6 +123,11 @@
           <i class="fas fa-exchange-alt"></i>
           <span class="menu-text">Transfer</span>
         </li>
+        <li onclick="activateMenu(this, 'transactions')">
+          <i class="fas fa-receipt"></i>
+          <span class="menu-text">Transaction History</span>
+        </li>
+
         <li onclick="activateMenu(this, 'airtime')">
           <i class="fas fa-mobile-alt"></i>
           <span class="menu-text">Airtime Recharge</span>
@@ -326,7 +331,7 @@
               <label>Amount</label>
               <input
                 type="text"
-                placeholder="0.00"
+                placeholder="$0.00"
                 required
                 id="amount-input"
                 name="amount"
@@ -350,6 +355,11 @@
                   style="display: none; width: 20px"
                 />
               </div>
+              <label>Account Name</label>
+              <input type="text" placeholder="Account Name" required />
+              <label>Bank Name</label>
+              <input type="text" placeholder="Account Name" required />
+
               <label>Transaction Description</label>
               <input type="text" placeholder="Description" />
               <button type="submit">Transfer</button>
@@ -368,7 +378,7 @@
               <label>Amount</label>
               <input
                 type="text"
-                placeholder="0.00"
+                placeholder="$0.00"
                 required
                 id="amount-input"
                 name="amount"
@@ -391,6 +401,10 @@
                   style="display: none; width: 20px"
                 />
               </div>
+              <label>Account Name</label>
+              <input type="text" placeholder="Account Name" required />
+              <label>Bank Name</label>
+              <input type="text" placeholder="Account Name" required />
               <label>Transaction Description</label>
               <input type="text" placeholder="Description" />
               <button type="submit">Transfer</button>
@@ -408,7 +422,7 @@
               <label>Amount</label>
               <input
                 type="text"
-                placeholder="0.00"
+                placeholder="$0.00"
                 required
                 id="amount-input"
                 name="amount"
@@ -431,14 +445,19 @@
                   style="display: none; width: 20px"
                 />
               </div>
-              <label>Select Bank</label>
+              <!-- <label>Select Bank</label>
               <select name="bank" id="bank-dropdown">
                 <option value="1">First Bank</option>
                 <option value="2">Access Bank</option>
                 <option value="3">Guaranty Trust Bank</option>
                 <option value="4">UBA</option>
                 <option value="5">Stanbic IBTC</option>
-              </select>
+              </select> -->
+
+              <label>Account Name</label>
+              <input type="text" placeholder="Account Name" required />
+              <label>Bank Name</label>
+              <input type="text" placeholder="Account Name" required />
               <label>Transaction Description</label>
               <input type="text" placeholder="Description" />
               <button type="submit">Transfer</button>
@@ -456,7 +475,7 @@
               <label>Amount (USD)</label>
               <input
                 type="text"
-                placeholder="0.00"
+                placeholder="$0.00"
                 required
                 id="amount-input"
                 name="amount"
@@ -524,35 +543,6 @@
                 <!-- Filled dynamically -->
               </div>
             </form>
-
-            <div id="transaction-history" class="collapsed">
-              <h3>Transaction History</h3>
-              <ul class="transaction-list" id="transaction-list">
-                <!-- Example transaction item -->
-                <li class="transaction-item">
-                  <div class="transaction-top">
-                    <span>Transfer to 1234567890</span>
-                    <span class="status pending">Pending</span>
-                  </div>
-                  <div class="transaction-details">
-                    <div>Amount: $100</div>
-                    <div>Date: April 12, 2025</div>
-                    <div>Txn ID: TXN123456</div>
-                  </div>
-                </li>
-                <li class="transaction-item">
-                  <div class="transaction-top">
-                    <span>Transfer to 1234567890</span>
-                    <span class="status pending">Pending</span>
-                  </div>
-                  <div class="transaction-details">
-                    <div>Amount: $100</div>
-                    <div>Date: April 12, 2025</div>
-                    <div>Txn ID: TXN123456</div>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </div>
           <!-- PIN Overlay -->
           <div id="pinOverlay" style="display: none" class="overlay">
@@ -598,6 +588,24 @@
               </div>
               <!-- <button id="submitPin">Submit</button> -->
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="transactions" class="section">
+        <div class="content-header">
+          <nav class="section-nav">
+            <span class="nav-text">Transaction History</span>
+          </nav>
+          <img
+            src="https://www.zenithbank.com/media/1400/zenith-bank-logo_1.png"
+            alt="Logo"
+            class="header-logo"
+          />
+        </div>
+        <div class="content-body">
+          <div id="transaction-history">
+            <ul id="transaction-list" class="transaction-list"></ul>
           </div>
         </div>
       </section>
@@ -733,15 +741,12 @@
         <span style="margin-right: 0.4rem">Bill</span>
       </li>
     </div>
-
     <script>
-      const transferForms = document.querySelectorAll(".transfer-form");
       const transactionHistory = document.getElementById("transaction-history");
-      const transferHistoryBtn = document.getElementById("transferHistoryBtn");
       const transactionList = document.getElementById("transaction-list");
       const refreshBtn = document.getElementById("refreshBtn");
 
-      // Function to generate a unique alphanumeric transaction ID (optional)
+      // Optional: Generate a transaction ID (not currently used)
       function generateTransactionId() {
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         let transactionId = "Tf3xN5";
@@ -753,34 +758,49 @@
         return transactionId;
       }
 
-      // Fetch transaction history from backend
+      // Fetch and render transaction history
       async function updateTransactionHistory() {
         const accountNumber = localStorage.getItem("currentAccount");
         if (!accountNumber) {
           console.error("No current account found in localStorage.");
+          transactionList.innerHTML = "<li>No account selected.</li>";
           return;
         }
 
         try {
+          transactionList.innerHTML = "<li>Loading transactions...</li>";
+
           const response = await fetch(
             `https://zenithbank-backend.onrender.com/api/users/transactions/${accountNumber}`
           );
           const transactions = await response.json();
 
-          transactionList.innerHTML = ""; // Clear current list
+          transactionList.innerHTML = ""; // Clear list
 
           if (!Array.isArray(transactions) || transactions.length === 0) {
             transactionList.innerHTML = "<li>No transactions found.</li>";
             return;
           }
 
+          // Sort by latest date
+          transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
           transactions.forEach((transaction) => {
             const transactionItem = document.createElement("li");
             transactionItem.classList.add("transaction-item");
+
+            const statusClass = transaction.status.toLowerCase();
+            const statusBg =
+              statusClass === "completed"
+                ? "green"
+                : statusClass === "failed"
+                ? "red"
+                : "yellow";
+
             transactionItem.innerHTML = `
               <div class="transaction-top">
                 <span>Transfer to ${transaction.recipientAccount}</span>
-                <span class="status ${transaction.status.toLowerCase()}">
+                <span class="status ${statusClass}" style="background-color: ${statusBg};">
                   ${transaction.status}
                 </span>
               </div>
@@ -792,9 +812,10 @@
                     : "Unknown"
                 }</div>
                 <div>Txn ID: ${transaction.transactionId}</div>
-                <p>contact customer care</p>
+                <p>Contact customer care</p>
               </div>
             `;
+
             transactionList.appendChild(transactionItem);
           });
         } catch (error) {
@@ -804,24 +825,15 @@
         }
       }
 
-      // Toggle transaction history visibility
-      transferHistoryBtn.addEventListener("click", function () {
-        if (transactionHistory.classList.contains("collapsed")) {
-          document.querySelector(".transfer-mode").style.display = "none";
-          transferForms.forEach((form) => (form.style.display = "none"));
-          transactionHistory.classList.remove("collapsed");
-          transferHistoryBtn.textContent = "Close Transaction History";
-          updateTransactionHistory(); // Refresh from server when shown
-        } else {
-        }
-      });
+      // Load on page load
+      window.addEventListener("DOMContentLoaded", updateTransactionHistory);
 
-      // Load transaction history from server on page load
-      updateTransactionHistory();
-
-      refreshBtn.addEventListener("click", function () {
-        location.reload(); // Optional: collapse by reload
-      });
+      // Optional: Refresh transactions when clicking a button
+      if (refreshBtn) {
+        refreshBtn.addEventListener("click", function () {
+          updateTransactionHistory();
+        });
+      }
     </script>
 
     <script src="/JS/dashboard.js"></script>

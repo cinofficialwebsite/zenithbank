@@ -184,14 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             showConfirmButton: true,
                           }).then((result) => {
                             if (result.isConfirmed) {
-                              // Just trigger the click without causing page reload
-                              const historyBtn =
-                                document.getElementById("transferHistoryBtn");
-                              if (historyBtn) {
-                                historyBtn.dispatchEvent(
-                                  new Event("click", { bubbles: true })
-                                );
-                              }
+                              location.reload(); // Just refresh the page
                             }
                           });
                         } else {

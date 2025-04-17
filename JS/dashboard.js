@@ -14,14 +14,24 @@ let actualBalance = null; // Store actual balance
 function formatAmount(amount) {
   return amount.toLocaleString("en-US", { style: "currency", currency: "USD" });
 }
-
 function toggleSidebar() {
   const sidebar = document.querySelector(".sidebar");
   const menuIcon = document.getElementById("menu-icon");
 
-  sidebar.classList.toggle("collapsed");
+  // Check the screen width to handle large and small screen behaviors
+  if (window.innerWidth <= 768) {
+    // For small screens, completely collapse the sidebar
+    sidebar.classList.toggle("collapsed");
+  } else {
+    // For large screens, only collapse the sidebar partially (showing icons)
+    sidebar.classList.toggle("partially-collapsed");
+  }
 
-  if (sidebar.classList.contains("collapsed")) {
+  // Toggle between the hamburger and close icons
+  if (
+    sidebar.classList.contains("collapsed") ||
+    sidebar.classList.contains("partially-collapsed")
+  ) {
     menuIcon.classList.replace("fa-times", "fa-bars");
   } else {
     menuIcon.classList.replace("fa-bars", "fa-times");
@@ -29,18 +39,58 @@ function toggleSidebar() {
 }
 
 function activateMenu(element, sectionId) {
+  // Remove the active class from all menu items
   document.querySelectorAll(".sidebar-menu li").forEach((li) => {
     li.classList.remove("active");
   });
 
+  // Add the active class to the clicked menu item
   element.classList.add("active");
 
+  // Remove the active class from all sections
   document.querySelectorAll(".section").forEach((section) => {
     section.classList.remove("active");
   });
 
+  // Add the active class to the corresponding section
   document.getElementById(sectionId).classList.add("active");
+
+  // Update the URL to reflect the section name
+  history.pushState(null, null, `#${sectionId}`);
+
+  // Collapse the sidebar (only partially on larger screens)
+  toggleSidebar();
+
+  // Ensure the menu icon is showing (fa-bars) after a section is activated
+  const menuIcon = document.getElementById("menu-icon");
+  menuIcon.classList.replace("fa-times", "fa-bars");
 }
+
+window.addEventListener("popstate", function () {
+  // Handle browser back/forward navigation
+  const sectionId = location.hash.replace("#", "");
+  if (sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      document.querySelectorAll(".sidebar-menu li").forEach((li) => {
+        li.classList.remove("active");
+      });
+      const activeMenuItem = [
+        ...document.querySelectorAll(".sidebar-menu li"),
+      ].find((li) => {
+        return li.getAttribute("onclick")?.includes(sectionId);
+      });
+      if (activeMenuItem) {
+        activeMenuItem.classList.add("active");
+      }
+
+      document.querySelectorAll(".section").forEach((section) => {
+        section.classList.remove("active");
+      });
+      section.classList.add("active");
+    }
+  }
+});
 
 function toggleMobileSidebar() {
   const sidebar = document.getElementById("sidebar");
