@@ -174,9 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
                               console.error("Error saving transaction:", error);
                             });
 
-                          // Show transaction history
-                          document.getElementById("transferHistoryBtn").click();
-
                           Swal.fire({
                             icon: "success",
                             title: "Transfer Successful!",
