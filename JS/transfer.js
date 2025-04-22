@@ -261,11 +261,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const accountNumberInput = form.querySelector(
               "input[name='accountNumberInputed']"
             );
-            if (accountNumberInput && accountNumberInput.value.length !== 11) {
+            if (accountNumberInput && accountNumberInput.value.length !== 10) {
               Swal.fire({
                 icon: "error",
                 title: "Invalid Account Number",
-                text: "Please enter a valid 11-digit account number.",
+                text: "Please enter a valid 10-digit account number.",
               });
               return;
             }

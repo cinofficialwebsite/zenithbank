@@ -1,9 +1,6 @@
-.header-logo {
-  height: 48px;
-}
-
 .form-group {
   margin-bottom: 1.5rem;
+  padding: 10px 2rem;
 }
 
 label {

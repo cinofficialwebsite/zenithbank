@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   if (!accountNumber) {
     // Account number is not assigned, so we need to generate one
     accountNumber = Math.floor(
-      10000000000 + Math.random() * 90000000000
+      1000000000 + Math.random() * 9000000000
     ).toString();
 
     // Update the user data with the newly generated account number

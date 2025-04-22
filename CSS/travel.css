@@ -1,6 +1,5 @@
 .travel-section {
-  padding: 20px;
-  background: #f9f9f9;
+  padding: 20px 2rem;
 }
 
 .travel-section .form-group {
@@ -73,9 +72,4 @@
 }
 
 @media (max-width: 600px) {
-  .travel-section .content-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
 }

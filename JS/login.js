@@ -14,7 +14,7 @@ document
     errorText.classList.add("hidden");
     userInfo.classList.add("hidden");
 
-    if (accountNumber.length === 11) {
+    if (accountNumber.length === 10) {
       try {
         const response = await fetch(
           `https://zenithbank-backend.onrender.com/api/users/account/${accountNumber}`
